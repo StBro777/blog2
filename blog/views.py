@@ -2,8 +2,9 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
-from blog.forms import EmailPostForm
-from blog.models import Post 
+from blog.forms import CommentForm, EmailPostForm
+from blog.models import Post, Comment 
+from django.views.decorators.http import require_POST  
 
 class PostListView(ListView):
     """
@@ -21,10 +22,16 @@ def post_detail(request, year, month, day, post):
                              slug=post, 
                              publish__year=year, 
                              publish__month=month, 
-                             publish__day=day) 
+                             publish__day=day)
+    # Список активных комментариев к этому посту
+    comments = post.comments.filter(active=True)
+    # Форма для комментирования пользователями
+    form = CommentForm()  
     return render(request,
                   'blog/post/detail.html',
-                  {'post': post})
+                  {'post': post,
+                  'comments': comments, 
+                  'form': form})
 
 
 def post_share(request, post_id):
@@ -55,9 +62,7 @@ def post_share(request, post_id):
                                                     'sent': sent})
 
 
-
-
-
+@require_POST
 def post_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id, \
                                    status=Post.Status.PUBLISHED)
