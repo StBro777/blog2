@@ -1,11 +1,12 @@
-{% extends "blog/base.html" %} 
+{% extends "blog/base.html" %}
+{% load blog_tags %}  
 
 {% block title %}Мой Блог{% endblock %} 
 
 {% block content %}
   <h1>Мой Блог</h1>
   {% if tag %}
-    <h2>Posts tagged with "{{ tag.name }}"</h2> 
+    <h2>Сообщения, помеченные тегом "{{ tag.name }}"</h2> 
   {% endif %} 
   {% for post in posts %}
     <h2>
@@ -23,9 +24,9 @@
       {% endfor %}
       </p>
       <p class="date">
-        Published {{ post.publish }} by {{ post.author }}
+        Опубликовано {{ post.publish }} by {{ post.author }}
       </p>
-      {{ post.body|truncatewords:30|linebreaks }} 
+      {{ post.body|markdown|truncatewords_html:30 }} 
     {% endfor %}
     {% include "pagination.html" with page=posts %}  
   {% endblock %}
