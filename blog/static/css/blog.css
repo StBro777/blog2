@@ -1,25 +1,58 @@
+/* Общие стили */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  background: url('texture.png'), linear-gradient(135deg, #f9f9f9, #e0e0e0); /* Органичный фон */
+  background-blend-mode: multiply;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Полупрозрачный слой для фона */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый */
+  z-index: -1;
 }
 
 a {
-  color: #00abff;
+  color: #1e90ff;
   text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+  color: #0077cc;
+  text-decoration: underline;
 }
 
 h1 {
   font-weight: normal;
   border-bottom: 1px solid #bbb;
   padding: 0 0 10px 0;
+  font-family: 'Roboto', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   font-weight: normal;
   margin: 30px 0 0;
+  font-family: 'Roboto', sans-serif;
 }
 
+/* Контент и сайдбар */
 #content {
   float: left;
   width: 60%;
@@ -29,49 +62,87 @@ h2 {
 #sidebar {
   float: right;
   width: 30%;
-  padding: 10px;
-  background: #efefef;
-  height: 100%;
+  padding: 20px;
+  background: rgba(239, 239, 239, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Дата */
 p.date {
   color: #ccc;
-  font-family: georgia, serif;
+  font-family: 'Georgia', serif;
   font-size: 12px;
   font-style: italic;
 }
 
-/* pagination */
+/* Пагинация */
 .pagination {
   margin: 40px 0;
   font-weight: bold;
 }
 
-/* forms */
+.pagination a {
+  padding: 8px 16px;
+  margin: 0 4px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.pagination a:hover {
+  background: #f1f1f1;
+}
+
+.pagination .active {
+  background: #1e90ff;
+  color: #fff;
+  border-color: #1e90ff;
+}
+
+/* Формы */
 label {
   float: left;
   clear: both;
   color: #333;
   margin-bottom: 4px;
 }
+
 input,
 textarea {
   clear: both;
   float: left;
   margin: 0 0 10px;
   background: #ededed;
-  border: 0;
-  padding: 6px 10px;
-  font-size: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
 }
+
+input:focus,
+textarea:focus {
+  border-color: #1e90ff;
+  outline: none;
+}
+
 input[type="submit"] {
   font-weight: bold;
-  background: #00abff;
+  background: #1e90ff;
   color: #fff;
   padding: 10px 20px;
   font-size: 14px;
   text-transform: uppercase;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s ease;
 }
+
+input[type="submit"]:hover {
+  background: #0077cc;
+}
+
 .errorlist {
   color: #cc0033;
   float: left;
@@ -79,15 +150,30 @@ input[type="submit"] {
   padding-left: 10px;
 }
 
-/* comments */
+/* Комментарии */
 .comment {
-  padding: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .comment:nth-child(even) {
-  background: #efefef;
+  background: #f9f9f9;
 }
+
 .comment .info {
   font-weight: bold;
   font-size: 12px;
   color: #666;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  #content, #sidebar {
+    float: none;
+    width: 100%;
+    padding: 10px;
+  }
 }
